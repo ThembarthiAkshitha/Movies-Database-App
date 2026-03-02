@@ -1,0 +1,33 @@
+.searched-details-main-bg-container {
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  color: #ffffff;
+}
+.movie-image-of-view-details {
+  width: 100%;
+  height: 30vh;
+}
+.movie-details-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  height: 50%;
+  width: 50%;
+}
+.span-element-for-sub-headings {
+  color: #d99414;
+  font-size: 20px;
+}
+.unordered-list {
+  display: flex;
+  list-style-type: none;
+  padding-left: 0px;
+  margin-left: 0px;
+  flex-wrap: wrap;
+  width: 100%;
+  color: #ffffff;
+}

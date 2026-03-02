@@ -1,0 +1,105 @@
+import {Component} from 'react'
+import Loader from 'react-loader-spinner'
+import Header from '../Header'
+import MovieItem from '../MovieItem'
+import './index.css'
+
+const apiStatusConstants = {
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  loading: 'LOADING',
+}
+
+class TopRated extends Component {
+  state = {
+    apiState: apiStatusConstants.loading,
+    listOfMovies: [],
+  }
+
+  componentDidMount() {
+    this.getPopularMovies()
+  }
+
+  onSuccess = data => {
+    const baseUrl = 'https://image.tmdb.org/t/p/'
+    const size = 'w500'
+    const updatedData = data.results.map(each => ({
+      id: each.id,
+      title: each.title,
+      voteAverage: each.vote_average,
+      posterPath: each.poster_path,
+      imageUrl: `${baseUrl}${size}${each.poster_path}`,
+    }))
+    this.setState({
+      apiState: apiStatusConstants.success,
+      listOfMovies: updatedData,
+    })
+  }
+
+  onFailure = () => {
+    this.setState({
+      apiState: apiStatusConstants.failure,
+    })
+  }
+
+  getPopularMovies = async () => {
+    const popularApi =
+      'https://api.themoviedb.org/3/movie/top_rated?api_key=ca3b5add575056b8b5a41eb3701385cb&language=en-US&page=1'
+    const response = await fetch(popularApi)
+    if (response.ok === true) {
+      const data = await response.json()
+      console.log(data)
+      this.onSuccess(data)
+    } else {
+      this.onFailure()
+    }
+  }
+
+  renderTopRatedView = () => {
+    const {listOfMovies} = this.state
+    console.log(listOfMovies)
+    return (
+      <div className="top-rated-main-bg-container">
+        <Header />
+        <h1 className="main-heading">Top Rated</h1>
+        <ul className="unordered-list">
+          {listOfMovies.map(each => (
+            <MovieItem details={each} key={each.id} />
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  renderFailureView = () => (
+    <div>
+      <Header />
+      <h1>Failure</h1>
+    </div>
+  )
+
+  renderLoadingView = () => (
+    <>
+      <Header />
+      <div className="products-loader-container">
+        <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
+      </div>
+    </>
+  )
+
+  render() {
+    const {apiState} = this.state
+    switch (apiState) {
+      case apiStatusConstants.failure:
+        return this.renderFailureView()
+      case apiStatusConstants.success:
+        return this.renderTopRatedView()
+      case apiStatusConstants.loading:
+        return this.renderLoadingView()
+      default:
+        return null
+    }
+  }
+}
+
+export default TopRated

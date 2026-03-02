@@ -1,0 +1,32 @@
+.movie-item-main-bg-container {
+  background-color: #1f1d1d;
+  width: 22%;
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  height: 450px;
+  border-radius: 10px;
+}
+.movie-image {
+  width: 100%;
+  height: 65%;
+}
+.heading {
+  font-size: 20px;
+}
+.details-container {
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  padding: 10px;
+}
+.button {
+  background-color: #d99414;
+  color: #ffffff;
+  border: 0px;
+  /* width: 250px; */
+  height: 25px;
+  border-radius: 10px;
+  align-self: flex-start;
+  padding: 5px;
+}
