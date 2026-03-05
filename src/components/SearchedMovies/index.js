@@ -112,15 +112,13 @@ class SearchMovieDetails extends Component {
   }
 
   renderFailureView = () => (
-    <div className="searched-details-main-bg-container">
-      <Header />
+    <div>
       <h1>There is no such movie</h1>
     </div>
   )
 
   renderLoadingView = () => (
-    <div className="searched-details-main-bg-container">
-      <Header />
+    <div>
       <div className="products-loader-container">
         <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
       </div>
@@ -131,8 +129,7 @@ class SearchMovieDetails extends Component {
     console.log()
     const {details} = this.state
     return (
-      <div className="searched-details-main-bg-container">
-        <Header />
+      <div>
         <ul className="unordered-list">
           {details.map(each => (
             <EachMovieDetails details={each} key={each.id} />
@@ -144,17 +141,28 @@ class SearchMovieDetails extends Component {
 
   render() {
     const {apiState} = this.state
-
+    let renderView
     switch (apiState) {
       case apiStatusConstants.loading:
-        return this.renderLoadingView()
+        renderView = this.renderLoadingView()
+        break
       case apiStatusConstants.success:
-        return this.renderMovieDetailsView()
+        renderView = this.renderMovieDetailsView()
+        break
       case apiStatusConstants.failure:
-        return this.renderFailureView()
+        renderView = this.renderFailureView()
+        break
       default:
         return null
     }
+    return (
+      <div className="searched-details-main-bg-container">
+        <Header />
+        <div>
+          {renderView}
+        </div>
+      </div>
+    )
   }
 }
 

@@ -121,7 +121,7 @@ class ViewDetails extends Component {
     console.log('movie details:', movieDetails)
     console.log('movie caste details:', casteDetails)
     return (
-      <div className="details-main-bg-container">
+      <div>
         <Header />
         <div className="movie-details-image-container">
           <img
@@ -177,14 +177,12 @@ class ViewDetails extends Component {
 
   renderFailureView = () => (
     <div>
-      <Header />
       <h1>Failure</h1>
     </div>
   )
 
   renderLoadingView = () => (
     <>
-      <Header />
       <div className="products-loader-container">
         <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
       </div>
@@ -193,16 +191,29 @@ class ViewDetails extends Component {
 
   render() {
     const {apiState} = this.state
+    let renderView 
     switch (apiState) {
       case apiStatusConstants.loading:
-        return this.renderLoadingView()
+        renderView = this.renderLoadingView()
+        break
       case apiStatusConstants.success:
-        return this.renderMovieDetailsView()
+        renderView = this.renderMovieDetailsView()
+        break
       case apiStatusConstants.failure:
-        return this.renderFailureView()
+        renderView = this.renderFailureView()
+        break
       default:
         return null
     }
+
+    return (
+      <div className="details-main-bg-container">
+        <Header />
+        <div>
+          {renderView}
+        </div>
+      </div>
+    )
   }
 }
 

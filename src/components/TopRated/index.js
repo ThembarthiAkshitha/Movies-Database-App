@@ -87,17 +87,58 @@ class TopRated extends Component {
   }
 
   renderTopRatedView = () => {
-    const {listOfMovies, page} = this.state
+    const {listOfMovies} = this.state
     console.log(listOfMovies)
     return (
-      <div className="top-rated-main-bg-container">
-        <Header />
+      <div>
         <h1 className="main-heading">Top Rated</h1>
         <ul className="unordered-list">
           {listOfMovies.map(each => (
             <MovieItem details={each} key={each.id} />
           ))}
         </ul>
+      </div>
+    )
+  }
+
+  renderFailureView = () => {
+    return (
+      <div>
+        <h1>Failure</h1>
+      </div>
+    )
+  }
+
+  renderLoadingView = () => {
+    return (
+      <>
+        <div className="products-loader-container">
+          <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
+        </div>
+      </>
+    )
+  }
+
+  render() {
+    const {apiState, page} = this.state
+    let renderView
+    switch (apiState) {
+      case apiStatusConstants.failure:
+        renderView = this.renderFailureView()
+        break
+      case apiStatusConstants.success:
+        renderView = this.renderTopRatedView()
+        break
+      case apiStatusConstants.loading:
+        renderView = this.renderLoadingView()
+        break
+      default:
+        return null
+    }
+    return (
+      <div className="top-rated-main-bg-container">
+        <Header />
+        <div>{renderView}</div>
         <div className="top-rated-prev-and-next-btn-container">
           <button
             className="top-rated-previous-button"
@@ -105,45 +146,13 @@ class TopRated extends Component {
           >
             Prev
           </button>
-
           <p>{page}</p>
-
           <button className="top-rated-next-button" onClick={this.onNext}>
             Next
           </button>
         </div>
       </div>
     )
-  }
-
-  renderFailureView = () => (
-    <div>
-      <Header />
-      <h1>Failure</h1>
-    </div>
-  )
-
-  renderLoadingView = () => (
-    <>
-      <Header />
-      <div className="products-loader-container">
-        <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
-      </div>
-    </>
-  )
-
-  render() {
-    const {apiState} = this.state
-    switch (apiState) {
-      case apiStatusConstants.failure:
-        return this.renderFailureView()
-      case apiStatusConstants.success:
-        return this.renderTopRatedView()
-      case apiStatusConstants.loading:
-        return this.renderLoadingView()
-      default:
-        return null
-    }
   }
 }
 

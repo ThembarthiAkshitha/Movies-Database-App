@@ -4,6 +4,8 @@
   flex-direction: column;
   width: 100vw;
   color: #ffffff;
+  min-height: 100vh;
+  justify-content: space-between;
 }
 .unordered-list {
   display: flex;
@@ -39,7 +41,7 @@
 }
 .top-rated-prev-and-next-btn-container {
   display: flex;
-  width: 30%;
+  width: 10%;
   align-self: flex-end;
   justify-content: space-between;
   align-items: center;

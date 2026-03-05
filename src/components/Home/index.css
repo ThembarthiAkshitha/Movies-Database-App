@@ -38,9 +38,12 @@
 }
 .prev-and-next-btn-container {
   display: flex;
-  width: 30%;
+  width: 10%;
   align-self: flex-end;
   justify-content: space-between;
   align-items: center;
   margin-right: 20px;
+}
+.failure-heading{
+  text-align: center;
 }
