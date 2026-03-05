@@ -16,3 +16,31 @@
 .main-heading {
   margin-left: 20px;
 }
+.upcoming-previous-button {
+  background-color: #d99414;
+  color: #ffffff;
+  border: 0px;
+  cursor: pointer;
+  outline: none;
+  height: 25px;
+  border-radius: 10px;
+  padding: 5px;
+}
+.upcoming-next-button {
+  background-color: #d99414;
+  color: #ffffff;
+  border: 0px;
+  cursor: pointer;
+  outline: none;
+  height: 25px;
+  border-radius: 10px;
+  padding: 5px;
+}
+.upcoming-prev-and-next-btn-container {
+  display: flex;
+  width: 30%;
+  align-self: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+}

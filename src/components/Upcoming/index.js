@@ -14,6 +14,8 @@ class Upcoming extends Component {
   state = {
     apiState: apiStatusConstants.loading,
     listOfMovies: [],
+    page: 1,
+    totalPages: 0,
   }
 
   componentDidMount() {
@@ -23,6 +25,7 @@ class Upcoming extends Component {
   onSuccess = data => {
     const baseUrl = 'https://image.tmdb.org/t/p/'
     const size = 'w500'
+    const totalPages = parseInt(data.total_pages)
     const updatedData = data.results.map(each => ({
       id: each.id,
       title: each.title,
@@ -33,6 +36,7 @@ class Upcoming extends Component {
     this.setState({
       apiState: apiStatusConstants.success,
       listOfMovies: updatedData,
+      totalPages,
     })
   }
 
@@ -43,8 +47,9 @@ class Upcoming extends Component {
   }
 
   getPopularMovies = async () => {
-    const popularApi =
-      'https://api.themoviedb.org/3/movie/upcoming?api_key=ca3b5add575056b8b5a41eb3701385cb&language=en-US&page=1'
+    const {page} = this.state
+    const pageNumber = parseInt(page)
+    const popularApi = `https://api.themoviedb.org/3/movie/upcoming?api_key=ca3b5add575056b8b5a41eb3701385cb&language=en-US&page=${pageNumber}`
     const response = await fetch(popularApi)
     if (response.ok === true) {
       const data = await response.json()
@@ -55,8 +60,34 @@ class Upcoming extends Component {
     }
   }
 
+  onPrevious = () => {
+    const {page} = this.state
+    if (page > 1) {
+      this.setState(
+        prevState => ({
+          page: prevState.page - 1,
+          apiState: apiStatusConstants.loading,
+        }),
+        this.getPopularMovies,
+      )
+    }
+  }
+
+  onNext = () => {
+    const {page, totalPages} = this.state
+    if (page < totalPages) {
+      this.setState(
+        prevState => ({
+          page: prevState.page + 1,
+          apiState: apiStatusConstants.loading,
+        }),
+        this.getPopularMovies,
+      )
+    }
+  }
+
   renderUpcomingView = () => {
-    const {listOfMovies} = this.state
+    const {listOfMovies, page, totalPages} = this.state
     console.log(listOfMovies)
     return (
       <div className="upcoming-main-bg-container">
@@ -67,6 +98,18 @@ class Upcoming extends Component {
             <MovieItem details={each} key={each.id} />
           ))}
         </ul>
+        <div className="upcoming-prev-and-next-btn-container">
+          <button
+            className="upcoming-previous-button"
+            onClick={this.onPrevious}
+          >
+            Prev
+          </button>
+          <p>{page}</p>
+          <button className="upcoming-next-button" onClick={this.onNext}>
+            Next
+          </button>
+        </div>
       </div>
     )
   }
