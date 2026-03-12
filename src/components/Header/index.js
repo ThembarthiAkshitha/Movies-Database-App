@@ -37,14 +37,14 @@ class Header extends Component {
               </Link>
               <div className="search-input-container">
                 <input
-                  type="search"
+                  type="text"
                   value={searchInputValue}
                   onChange={this.onSearchChange}
                   className="search-input"
                   placeholder="Search movie name here"
                 />
                 <Link to="/searchedMovieDetails/">
-                  <button className="button" onClick={onSearch}>
+                  <button className="button" onClick={onSearch} type="button">
                     Search
                   </button>
                 </Link>

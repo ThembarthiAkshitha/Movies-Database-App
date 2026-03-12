@@ -13,8 +13,8 @@ const apiStatusConstants = {
 const EachMovieDetails = props => {
   const {details} = props
   const {
-    id,
-    originalTitle,
+    // id,
+    // originalTitle,
     overview,
     posterPath,
     releaseDate,
@@ -23,7 +23,11 @@ const EachMovieDetails = props => {
   } = details
   return (
     <li className="movie-details-container">
-      <img src={`${posterPath}`} className="movie-image-of-view-details" />
+      <img
+        src={`${posterPath}`}
+        className="movie-image-of-view-details"
+        alt={title}
+      />
       <h1>{title}</h1>
       <p>
         <span className="span-element-for-sub-headings">Rating: </span>{' '}
@@ -42,16 +46,10 @@ const EachMovieDetails = props => {
 }
 
 class SearchMovieDetails extends Component {
-  static contextType = SearchContext
-
   state = {
     details: [],
     apiState: apiStatusConstants.loading,
     prevSearchInput: '',
-  }
-
-  componentDidMount() {
-    this.makingSerachApiCall()
   }
 
   componentDidUpdate() {
@@ -69,13 +67,13 @@ class SearchMovieDetails extends Component {
     }
   }
 
-  makingSerachApiCall = async () => {
-    const {searchInput} = this.context
+  makingSearchApiCall = async searchInput => {
     const searchApi = `https://api.themoviedb.org/3/search/movie?api_key=ca3b5add575056b8b5a41eb3701385cb&language=en-US&query=${searchInput}&page=1`
+
     const response = await fetch(searchApi)
+
     if (response.ok === true) {
       const data = await response.json()
-      console.log('data:', data)
       this.onSuccess(data.results)
     } else {
       this.onFailure()
@@ -156,12 +154,19 @@ class SearchMovieDetails extends Component {
         return null
     }
     return (
-      <div className="searched-details-main-bg-container">
-        <Header />
-        <div>
-          {renderView}
-        </div>
-      </div>
+      <SearchContext.Consumer>
+        {value => {
+          const {searchInput} = value
+          this.makingSearchApiCall(searchInput)
+
+          return (
+            <div className="searched-details-main-bg-container">
+              <Header />
+              <div>{renderView}</div>
+            </div>
+          )
+        }}
+      </SearchContext.Consumer>
     )
   }
 }

@@ -13,7 +13,7 @@ const CastItem = props => {
   const {profilePath, character, originalName} = details
   return (
     <li className="cast-list-item-container">
-      <img src={profilePath} className="caste-image-item" />
+      <img src={profilePath} className="caste-image-item" alt={originalName} />
       <p>
         <span className="span-element-for-sub-headings">Original Name: </span>
         {originalName}
@@ -28,7 +28,7 @@ const CastItem = props => {
 
 class ViewDetails extends Component {
   state = {
-    details: [],
+    // details: [],
     apiState: apiStatusConstants.loading,
     movieDetails: [],
     casteDetails: [],
@@ -104,15 +104,15 @@ class ViewDetails extends Component {
   renderMovieDetailsView = () => {
     const {casteDetails, movieDetails} = this.state
     const {
-      id,
+      // id,
       title,
       posterPath,
       budget,
-      genres,
-      homepage,
+      // genres,
+      // homepage,
       overview,
       releaseDate,
-      status,
+      // status,
       voteAverage,
       spokenLanguages,
     } = movieDetails
@@ -126,6 +126,7 @@ class ViewDetails extends Component {
         <div className="movie-details-image-container">
           <img
             src={`${posterPath}`}
+            alt={title}
             className="movie-image-of-view-details-page"
           />
           <div className="movie-details-container-of-view-details">
@@ -191,7 +192,7 @@ class ViewDetails extends Component {
 
   render() {
     const {apiState} = this.state
-    let renderView 
+    let renderView
     switch (apiState) {
       case apiStatusConstants.loading:
         renderView = this.renderLoadingView()
@@ -209,9 +210,7 @@ class ViewDetails extends Component {
     return (
       <div className="details-main-bg-container">
         <Header />
-        <div>
-          {renderView}
-        </div>
+        <div>{renderView}</div>
       </div>
     )
   }

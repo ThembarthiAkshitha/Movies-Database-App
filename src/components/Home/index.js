@@ -88,7 +88,7 @@ class Home extends Component {
   }
 
   renderPopularView = () => {
-    const {listOfMovies, page, totalPages} = this.state
+    const {listOfMovies} = this.state
     console.log(listOfMovies)
     return (
       <div>
@@ -102,21 +102,17 @@ class Home extends Component {
     )
   }
 
-  renderFailureView = () => {
-    return (
-      <div className="top-rated-main-bg-container">
-        <h1 className="failure-heading">Failure</h1>
-      </div>
-    )
-  }
+  renderFailureView = () => (
+    <div className="top-rated-main-bg-container">
+      <h1 className="failure-heading">Failure</h1>
+    </div>
+  )
 
-  renderLoadingView = () => {
-    return (
-      <div className="products-loader-container">
-        <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
-      </div>
-    )
-  }
+  renderLoadingView = () => (
+    <div className="products-loader-container">
+      <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
+    </div>
+  )
 
   render() {
     const {apiState} = this.state
@@ -143,11 +139,16 @@ class Home extends Component {
           <button
             className="top-rated-previous-button"
             onClick={this.onPrevious}
+            type="button"
           >
             Prev
           </button>
           <p>{page}</p>
-          <button className="top-rated-next-button" onClick={this.onNext}>
+          <button
+            className="top-rated-next-button"
+            onClick={this.onNext}
+            type="button"
+          >
             Next
           </button>
         </div>
