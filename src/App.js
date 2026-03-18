@@ -15,7 +15,7 @@ class App extends Component {
     searchInputValue: '',
   }
 
-  // this is function for on change of search input
+  // this is a function for on change of search input
 
   onSearchInputChange = searchMovieName => {
     this.setState({
